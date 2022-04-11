@@ -75,20 +75,90 @@ class Card
     }
 }
 
-class TreeNode<T> implements Iterable<TreeNode<T>>{
+//Tree containing every possible state for the game.
+class TreeStates
+{
+    class Node {
+        private int payoff;
+        private String action;
+        private List<Node> children;
 
-    T data;
-    TreeNode<T> parent;
-    List<TreeNode<T>> children;
+        public Node(String action, int payoff) {
+            this.action = action;
+            this.payoff = payoff;
+            this.children = null;
+        }
 
-    public TreeNode(T data)
-    {
-        this.data=data;
-        this.children = new LinkedList<TreeNode<T>>();
+        public String getAction()
+        {
+            return this.action;
+        }
+        public int getPayoff()
+        {
+            return this.payoff;
+        }
+
+        public void setChildren(List<Node> children)
+        {
+            this.children = children;
+        }
+        public List<Node> getChildren()
+        {
+            return this.children;
+        }
     }
 
-    @Override
-    public Iterator<TreeNode<T>> iterator() {
-        return this.children.iterator();
+    public void insert(Node node)
+    {
+
+    }
+
+    public List<Node> generateChildren(int check, int bet, int fold, Node previous_node)
+    {
+        if((fold-1)==(n_players))
+            return null;
+
+        String previous_action = previous_node.getAction();
+
+        List<Node> children_nodes = new LinkedList<>();
+        int previous_payoff = previous_node.getPayoff();
+
+        //To calculate the payoff, this code will check if the previous action was a bet.
+        //If in the next turn there's  going to be call/bet, the bet value should be added.
+        //Otherwise, if there's going to be a fold, there's no need to modify the payoff of that turn
+
+        for (String action: Action.Actions) {
+            if(action.equals("B") && bet<3*n_players){
+                Node node = new Node(action, previous_payoff + 1 + (previous_action == "B"? 1:0));
+                node.setChildren(generateChildren(check,bet+1,fold, node));
+                children_nodes.add(node);
+            }
+            //Should check if the last plays were final.
+            if(action.equals("C") && !check_final_hand){
+                Node node = new Node(action, previous_payoff + (previous_action == "B"? 1:0));
+                node.setChildren(generateChildren(check+1,bet,fold, node));
+                children_nodes.add(node);
+            }
+            if(action.equals("F")){
+                Node node = new Node(action, previous_payoff);
+                node.setChildren(generateChildren(check,bet,fold+1, node));
+                children_nodes.add(node);
+            }
+        }
+        return children_nodes;
+    }
+}
+
+
+class Action
+{
+    public static List<String> Actions;
+
+    public Action()
+    {
+        Actions = new LinkedList<>();
+        Actions.add("B"); // Bet
+        Actions.add("C"); // Check/Call
+        Actions.add("F"); // Fold
     }
 }
