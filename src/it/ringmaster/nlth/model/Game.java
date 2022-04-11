@@ -1,6 +1,20 @@
-package it.ringmaster.nlth.classes;
+package it.ringmaster.nlth.model;
 
 import java.util.*;
+
+
+//Classes to implement:
+// - Game Manager (Game status, (HashMap idPlayer, List<Cards>) Player cards, Table, List<Cards> Table cards)
+// - Status (Actual status (Flop, ecc...), Past status(number of bets/check/fold))
+// - Dealer (Init cards, Give cards, Shuffle Cards)
+// - Player (Current bet, Enum -> Player status (idle, active), Utility)
+// - Table (Players, HashMap(id, Player))
+
+// To calculate the score check in first place the "combination", then if there's a tie
+// Check the cards details.
+
+// - PluribusTrainer (end)
+
 
 public class Game {
 
@@ -30,7 +44,7 @@ public class Game {
      * @param n_players Number of players in game.
      * @return A List containing 2*n_players (players' hands) + 5 (field) cards
      */
-    public List<Card> getCards(int n_players){
+    public List<Card> initCards(int n_players){
         Collections.shuffle(cards);
 
         List<Card> game_cards = new LinkedList<Card>();
@@ -79,13 +93,13 @@ class Card
 class TreeStates
 {
     class Node {
-        private int payoff;
+        private int currentBet;
         private String action;
         private List<Node> children;
 
-        public Node(String action, int payoff) {
+        public Node(String action, int currentBet) {
             this.action = action;
-            this.payoff = payoff;
+            this.currentBet = currentBet;
             this.children = null;
         }
 
@@ -93,9 +107,9 @@ class TreeStates
         {
             return this.action;
         }
-        public int getPayoff()
+        public int getCurrentBet()
         {
-            return this.payoff;
+            return this.currentBet;
         }
 
         public void setChildren(List<Node> children)
