@@ -15,7 +15,7 @@ public class Status {
     public Status()
     {
         //New Game
-        this.actualStatus ="";
+        this.actualStatus =;
         this.bet=0;
         this.check_call=0;
         this.fold=0;

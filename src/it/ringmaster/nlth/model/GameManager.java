@@ -22,10 +22,15 @@ public class GameManager {
 
     public GameManager()
     {
-        this.status= new Status();
+        this.status = new Status();
         this.playersCards = new HashMap<Long, List<Card>>();
         this.table = new Table();
         this.tableCards = new ArrayList<Card>();
+    }
+
+    public void startGame()
+    {
+
     }
 
 

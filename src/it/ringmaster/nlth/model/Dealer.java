@@ -15,14 +15,11 @@ public class Dealer {
         cards = generateCards();
     }
 
-    private List<Card> generateCards()
-    {
+    private List<Card> generateCards() {
         List<Card> cards = new LinkedList<>();
-        for (Value v: Value.values())
-        {
-            for (Suit s: Suit.values())
-            {
-                cards.add(new Card(v,s));
+        for (Value v : Value.values()) {
+            for (Suit s : Suit.values()) {
+                cards.add(new Card(v, s));
             }
         }
         return cards;
