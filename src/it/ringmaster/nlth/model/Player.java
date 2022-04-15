@@ -11,6 +11,11 @@ public class Player {
     private int current_bet;
     private State currentStatus;
 
+    //Initializing the static value for the lastId used.
+    static {
+        lastId =new Long(0);
+    }
+
     public Player(){
         //Initializing the player id and modifying the
         // field lastId for the next player to create.

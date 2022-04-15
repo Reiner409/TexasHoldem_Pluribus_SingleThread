@@ -15,7 +15,11 @@ public class Status {
     public Status()
     {
         //New Game
-        this.actualStatus =;
+        //The game begins during the 'pre-flop' status.
+        //Every player already bet 1 fiches, and they got the cards.
+
+        //Status= Pre-flop, Flop, Turn, River, Showdown
+        this.actualStatus ="pre-flop";
         this.bet=0;
         this.check_call=0;
         this.fold=0;
@@ -31,4 +35,24 @@ public class Status {
             this.fold++;
     }
 
+    public String getActualStatus() {
+        return actualStatus;
+    }
+
+    public void setActualStatus(String actualStatus)
+    {
+        this.actualStatus = actualStatus;
+    }
+
+    public int getBet() {
+        return bet;
+    }
+
+    public int getCheck_call() {
+        return check_call;
+    }
+
+    public int getFold() {
+        return fold;
+    }
 }
